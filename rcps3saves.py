@@ -17,6 +17,9 @@ def download_url (url):
     return url
 
 name = input("What is the serial number of the game?: ")
+# name = "BCUS98208"
+version = input("What is the current version of the game?: ")
+# version = "01.28"
 
 URL = "https://a0.ww.np.dl.playstation.net/tpl/np/{}/{}-ver.xml".format(name, name)
 response = requests.get(URL, verify=False)
@@ -24,7 +27,10 @@ with open('update.xml', 'wb') as file:
    file.write(response.content)
 
 xmldoc = minidom.parse('update.xml')
-packagelist = xmldoc.getElementsByTagName('package')
+elements = xmldoc.getElementsByTagName('package')
+sortedel = sorted(elements, key=lambda elem: elem.getAttribute("version"))
+packagelist = filter(lambda elem: elem.getAttribute("version") > version, sortedel)
+packagelist = list(packagelist)
 urls = [elem.getAttribute("url") for elem in packagelist]
 print(f"Downloading {len(urls)} updates")
 for element in packagelist:
