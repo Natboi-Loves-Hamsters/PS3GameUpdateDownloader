@@ -23,6 +23,9 @@ version = input("What is the current version of the game?: ")
 
 URL = "https://a0.ww.np.dl.playstation.net/tpl/np/{}/{}-ver.xml".format(name, name)
 response = requests.get(URL, verify=False)
+if response.status_code != 200:
+    print ("Error, game ID is invalid!")
+    exit(1)
 with open('update.xml', 'wb') as file:
    file.write(response.content)
 
