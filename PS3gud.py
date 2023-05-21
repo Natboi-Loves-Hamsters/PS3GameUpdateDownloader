@@ -36,7 +36,7 @@ with open(f'{name}/update.xml', 'wb') as file:
     file.write(response.content)
 # downloads the xml
 
-xmldoc = minidom.parse('update.xml')
+xmldoc = minidom.parse(f'{name}/update.xml')
 elements = xmldoc.getElementsByTagName('package')
 sortedel = sorted(elements, key=lambda elem: elem.getAttribute("version"))
 packagelist = filter(lambda elem: elem.getAttribute("version") > version, sortedel)
