@@ -22,16 +22,17 @@ version = input("What is the current version of the game?: ")
 # version = "01.28"
 # inputs for info
 
-path = os.path.exists(name)
-if path is False:
-    os.mkdir(name)
-# makes directory for the name if it doesnt exist
-
 URL = "https://a0.ww.np.dl.playstation.net/tpl/np/{}/{}-ver.xml".format(name, name)
 response = requests.get(URL, verify=False)
 if response.status_code != 200:
     print("Error, game ID is invalid!")
     exit(1)
+
+path = os.path.exists(name)
+if path is False:
+    os.mkdir(name)
+# makes directory for the name if it doesnt exist
+
 with open(f'{name}/update.xml', 'wb') as file:
     file.write(response.content)
 # downloads the xml
